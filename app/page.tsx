@@ -1,13 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import MainVisual from "../components/MainVisual"
+import MainVisual from "../components/MainVisual";
 import PrefectureSelector from "../components/PrefectureSelector";
 import PrefectureDetail from "../components/PrefectureDetail";
 
 export default function Home() {
-  const [selectedPrefecture, setSelectedPrefecture] = useState<string | null>(null);
-  const [currentYear, setCurrentYear] = useState<number>(new Date().getFullYear());
+  const [selectedPrefecture, setSelectedPrefecture] = useState<string | null>(
+    null
+  );
+  const [currentYear, setCurrentYear] = useState<number>(
+    new Date().getFullYear()
+  );
 
   useEffect(() => {
     setCurrentYear(new Date().getFullYear());
@@ -46,7 +50,7 @@ export default function Home() {
             rel="noopener noreferrer"
             className="underline hover:text-blue-500"
           >
-            気象庁
+            https://weather.tsukumijima.net/
           </a>
         </p>
         <p className="mt-2">© {currentYear} 天気予報アプリ</p>
