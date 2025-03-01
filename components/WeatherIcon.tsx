@@ -11,12 +11,14 @@ const WeatherIcon: React.FC<WeatherIconProps> = ({
   className = "text-4xl",
 }) => {
   return (
+    // unoptimizedオプションを追加して外部URLから画像を使用できるようにする
     <Image
       src={imagePath}
       alt="weather icon"
       width={50}
       height={50}
       className={className}
+      unoptimized
     />
   );
 };

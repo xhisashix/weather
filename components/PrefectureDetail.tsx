@@ -42,6 +42,12 @@ const PrefectureDetail: React.FC<PrefectureDetailProps> = ({
     fetchData();
   }, [prefectureCode]);
 
+  // 日付のフォーマット方法を修正し、SSRとCSRで同じ結果になるようにする
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  };
+
   if (!prefectureCode) {
     return (
       <div className="text-center py-8 text-gray-500 dark:text-gray-400">
@@ -207,10 +213,7 @@ const PrefectureDetail: React.FC<PrefectureDetailProps> = ({
 
         <div className="mt-6 text-sm text-gray-500 dark:text-gray-400">
           <p>発表元: {forecast.publishingOffice}</p>
-          <p>
-            発表日時:{" "}
-            {new Date(forecast.reportDatetime).toLocaleString("ja-JP")}
-          </p>
+          <p>発表日時: {formatDate(forecast.reportDatetime)}</p>
         </div>
       </div>
     </div>

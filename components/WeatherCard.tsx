@@ -19,6 +19,8 @@ const WeatherCard: React.FC<WeatherCardProps> = ({
   const weather = weatherInfo.forecasts?.[0].detail.weather || "情報なし";
   const maxTemp = weatherInfo.forecasts?.[0].temperature.max?.celsius || "-";
   const minTemp = weatherInfo.forecasts?.[0].temperature.min?.celsius || "-";
+  
+  // 日付のフォーマット方法は変化する値ではなく、APIから取得した固定の値を使用
 
   return (
     <div
