@@ -133,12 +133,12 @@ const PrefectureDetail: React.FC<PrefectureDetailProps> = ({
                     style={{
                       width: `${
                         weatherInfo.forecasts?.[0].chanceOfRain?.["T00_06"] || 0
-                      }%`,
+                      }`,
                     }}
                   ></div>
                 </div>
                 <span className="ml-2">
-                  {weatherInfo.forecasts?.[0].chanceOfRain?.["T00_06"] || "-"}%
+                  {weatherInfo.forecasts?.[0].chanceOfRain?.["T00_06"] || "-"}
                 </span>
               </div>
               <div className="flex items-center">
@@ -149,12 +149,12 @@ const PrefectureDetail: React.FC<PrefectureDetailProps> = ({
                     style={{
                       width: `${
                         weatherInfo.forecasts?.[0].chanceOfRain?.["T06_12"] || 0
-                      }%`,
+                      }`,
                     }}
                   ></div>
                 </div>
                 <span className="ml-2">
-                  {weatherInfo.forecasts?.[0].chanceOfRain?.["T06_12"] || "-"}%
+                  {weatherInfo.forecasts?.[0].chanceOfRain?.["T06_12"] || "-"}
                 </span>
               </div>
               <div className="flex items-center">
@@ -162,20 +162,20 @@ const PrefectureDetail: React.FC<PrefectureDetailProps> = ({
                 <div className="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                   <div
                     className="bg-blue-500 h-2 rounded-full"
-                    style={{ width: `${chanceOfRain?.["T12_18"] || 0}%` }}
+                    style={{ width: `${chanceOfRain?.["T12_18"] || 0}` }}
                   ></div>
                 </div>
-                <span className="ml-2">{chanceOfRain?.["T12_18"] || "-"}%</span>
+                <span className="ml-2">{chanceOfRain?.["T12_18"] || "-"}</span>
               </div>
               <div className="flex items-center">
                 <span className="w-16 font-medium">18〜24:</span>
                 <div className="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                   <div
                     className="bg-blue-500 h-2 rounded-full"
-                    style={{ width: `${chanceOfRain?.["T18_24"] || 0}%` }}
+                    style={{ width: `${chanceOfRain?.["T18_24"] || 0}` }}
                   ></div>
                 </div>
-                <span className="ml-2">{chanceOfRain?.["T18_24"] || "-"}%</span>
+                <span className="ml-2">{chanceOfRain?.["T18_24"] || "-"}</span>
               </div>
             </div>
           </div>
@@ -213,7 +213,7 @@ const PrefectureDetail: React.FC<PrefectureDetailProps> = ({
 
         <div className="mt-6 text-sm text-gray-500 dark:text-gray-400">
           <p>発表元: {forecast.publishingOffice}</p>
-          <p>発表日時: {formatDate(forecast.reportDatetime)}</p>
+          <p>発表日時: {formatDate(forecast.publicTime)}</p>
         </div>
       </div>
     </div>

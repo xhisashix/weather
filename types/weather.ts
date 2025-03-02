@@ -4,7 +4,7 @@ export interface WeatherForecast {
   publishingOffice: string;
   title: string;
   link: string;
-  description: string;
+  description: Description;
   forecasts: TodayWeather[];
   location: Location;
 }
@@ -61,6 +61,14 @@ export interface TodayWeather {
     width: number;
     height: number;
   };
+}
+
+export interface Description {
+  publicTime: string;
+  publicTimeFormatted: string;
+  headlineText: string;
+  bodyText: string;
+  text: string;
 }
 
 export interface Location {
