@@ -28,6 +28,7 @@ export interface Area {
 export interface Prefecture {
   name: string;
   code: string;
+  region: string;
 }
 
 export interface TodayWeather {
