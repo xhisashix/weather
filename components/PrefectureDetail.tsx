@@ -45,7 +45,10 @@ const PrefectureDetail: React.FC<PrefectureDetailProps> = ({
   // 日付のフォーマット方法を修正し、SSRとCSRで同じ結果になるようにする
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}-${String(date.getDate()).padStart(2, "0")}`;
   };
 
   if (!prefectureCode) {
@@ -83,7 +86,6 @@ const PrefectureDetail: React.FC<PrefectureDetailProps> = ({
 
   const prefecture = prefectures.find((p) => p.code === prefectureCode);
   const prefectureName = prefecture?.name || "選択された地域";
-  const regionName = prefecture?.region || "";
 
   // 今日の天気
   const weatherInfo = forecast;
@@ -122,7 +124,7 @@ const PrefectureDetail: React.FC<PrefectureDetailProps> = ({
               </div>
             </div>
           </div>
-          
+
           {/* 降水確率 - モバイル表示調整 */}
           <div className="w-full sm:w-auto sm:ml-auto text-sm bg-blue-50 dark:bg-blue-900/30 p-3 rounded-lg">
             <h4 className="font-medium text-blue-700 dark:text-blue-300 mb-2 text-center sm:text-right">
@@ -135,7 +137,8 @@ const PrefectureDetail: React.FC<PrefectureDetailProps> = ({
                   <div
                     className="bg-blue-500 h-2 rounded-full"
                     style={{
-                      width: weatherInfo.forecasts?.[0].chanceOfRain?.["T00_06"]
+                      width:
+                        weatherInfo.forecasts?.[0].chanceOfRain?.["T00_06"],
                     }}
                   ></div>
                 </div>
@@ -149,7 +152,8 @@ const PrefectureDetail: React.FC<PrefectureDetailProps> = ({
                   <div
                     className="bg-blue-500 h-2 rounded-full"
                     style={{
-                      width: weatherInfo.forecasts?.[0].chanceOfRain?.["T06_12"]
+                      width:
+                        weatherInfo.forecasts?.[0].chanceOfRain?.["T06_12"],
                     }}
                   ></div>
                 </div>
@@ -165,7 +169,9 @@ const PrefectureDetail: React.FC<PrefectureDetailProps> = ({
                     style={{ width: `${chanceOfRain?.["T12_18"] || 0}` }}
                   ></div>
                 </div>
-                <span className="ml-2 text-xs whitespace-nowrap">{chanceOfRain?.["T12_18"] || "-"}</span>
+                <span className="ml-2 text-xs whitespace-nowrap">
+                  {chanceOfRain?.["T12_18"] || "-"}
+                </span>
               </div>
               <div className="flex items-center">
                 <span className="w-14 font-medium text-xs">18〜24時:</span>
@@ -175,7 +181,9 @@ const PrefectureDetail: React.FC<PrefectureDetailProps> = ({
                     style={{ width: `${chanceOfRain?.["T18_24"] || 0}` }}
                   ></div>
                 </div>
-                <span className="ml-2 text-xs whitespace-nowrap">{chanceOfRain?.["T18_24"] || "-"}</span>
+                <span className="ml-2 text-xs whitespace-nowrap">
+                  {chanceOfRain?.["T18_24"] || "-"}
+                </span>
               </div>
             </div>
           </div>
