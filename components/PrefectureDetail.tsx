@@ -81,9 +81,9 @@ const PrefectureDetail: React.FC<PrefectureDetailProps> = ({
     return null;
   }
 
-  const prefectureName =
-    prefectures.find((p) => p.code === prefectureCode)?.name ||
-    "選択された地域";
+  const prefecture = prefectures.find((p) => p.code === prefectureCode);
+  const prefectureName = prefecture?.name || "選択された地域";
+  const regionName = prefecture?.region || "";
 
   // 今日の天気
   const weatherInfo = forecast;
@@ -91,118 +91,118 @@ const PrefectureDetail: React.FC<PrefectureDetailProps> = ({
   const chanceOfRain = weatherInfo.forecasts?.[0].chanceOfRain;
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-      <h2 className="text-2xl font-bold mb-6 dark:text-white">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6">
+      <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 dark:text-white">
         {prefectureName}の天気予報
       </h2>
 
-      {/* 今日の天気 */}
+      {/* 今日の天気 - モバイル表示調整 */}
       <div>
-        <h3 className="text-xl font-semibold mb-4 dark:text-white">
+        <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 dark:text-white">
           今日の天気
         </h3>
-        <div className="flex items-center my-4">
-          <WeatherIcon
-            imagePath={weatherInfo.forecasts?.[0].image.url}
-            className="text-5xl mr-4"
-          />
-          <div>
-            <p className="text-lg dark:text-white">
-              {weatherInfo.forecasts?.[0].telop}
-            </p>
-            <div className="mt-1">
-              <span className="text-red-500 font-medium mr-2">
-                {weatherInfo.forecasts?.[0].temperature.max?.celsius || "-"}°C
-              </span>
-              <span className="text-blue-500 font-medium">
-                {weatherInfo.forecasts?.[0].temperature.min?.celsius || "-"}°C
-              </span>
+        {/* モバイル表示で折り返しやすいように調整 */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center my-4 gap-4">
+          <div className="flex items-center">
+            <WeatherIcon
+              imagePath={weatherInfo.forecasts?.[0].image.url}
+              className="w-12 h-12 mr-3"
+            />
+            <div>
+              <p className="text-base sm:text-lg dark:text-white">
+                {weatherInfo.forecasts?.[0].telop}
+              </p>
+              <div className="mt-1">
+                <span className="text-red-500 font-medium mr-2">
+                  {weatherInfo.forecasts?.[0].temperature.max?.celsius || "-"}°C
+                </span>
+                <span className="text-blue-500 font-medium">
+                  {weatherInfo.forecasts?.[0].temperature.min?.celsius || "-"}°C
+                </span>
+              </div>
             </div>
           </div>
-          {/* 降水確率 */}
-          <div className="ml-auto text-sm text-right bg-blue-50 dark:bg-blue-900/30 p-3 rounded-lg">
-            <h4 className="font-medium text-blue-700 dark:text-blue-300 mb-2">
+          
+          {/* 降水確率 - モバイル表示調整 */}
+          <div className="w-full sm:w-auto sm:ml-auto text-sm bg-blue-50 dark:bg-blue-900/30 p-3 rounded-lg">
+            <h4 className="font-medium text-blue-700 dark:text-blue-300 mb-2 text-center sm:text-right">
               降水確率
             </h4>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+            <div className="grid grid-cols-2 gap-x-3 gap-y-2">
               <div className="flex items-center">
-                <span className="w-16 font-medium">0〜6:</span>
+                <span className="w-14 font-medium text-xs">0〜6時:</span>
                 <div className="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                   <div
                     className="bg-blue-500 h-2 rounded-full"
                     style={{
-                      width: `${
-                        weatherInfo.forecasts?.[0].chanceOfRain?.["T00_06"] || 0
-                      }`,
+                      width: weatherInfo.forecasts?.[0].chanceOfRain?.["T00_06"]
                     }}
                   ></div>
                 </div>
-                <span className="ml-2">
+                <span className="ml-2 text-xs whitespace-nowrap">
                   {weatherInfo.forecasts?.[0].chanceOfRain?.["T00_06"] || "-"}
                 </span>
               </div>
               <div className="flex items-center">
-                <span className="w-16 font-medium">6~12:</span>
+                <span className="w-14 font-medium text-xs">6〜12時:</span>
                 <div className="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                   <div
                     className="bg-blue-500 h-2 rounded-full"
                     style={{
-                      width: `${
-                        weatherInfo.forecasts?.[0].chanceOfRain?.["T06_12"] || 0
-                      }`,
+                      width: weatherInfo.forecasts?.[0].chanceOfRain?.["T06_12"]
                     }}
                   ></div>
                 </div>
-                <span className="ml-2">
+                <span className="ml-2 text-xs whitespace-nowrap">
                   {weatherInfo.forecasts?.[0].chanceOfRain?.["T06_12"] || "-"}
                 </span>
               </div>
               <div className="flex items-center">
-                <span className="w-16 font-medium">12〜18:</span>
+                <span className="w-14 font-medium text-xs">12〜18時:</span>
                 <div className="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                   <div
                     className="bg-blue-500 h-2 rounded-full"
                     style={{ width: `${chanceOfRain?.["T12_18"] || 0}` }}
                   ></div>
                 </div>
-                <span className="ml-2">{chanceOfRain?.["T12_18"] || "-"}</span>
+                <span className="ml-2 text-xs whitespace-nowrap">{chanceOfRain?.["T12_18"] || "-"}</span>
               </div>
               <div className="flex items-center">
-                <span className="w-16 font-medium">18〜24:</span>
+                <span className="w-14 font-medium text-xs">18〜24時:</span>
                 <div className="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                   <div
                     className="bg-blue-500 h-2 rounded-full"
                     style={{ width: `${chanceOfRain?.["T18_24"] || 0}` }}
                   ></div>
                 </div>
-                <span className="ml-2">{chanceOfRain?.["T18_24"] || "-"}</span>
+                <span className="ml-2 text-xs whitespace-nowrap">{chanceOfRain?.["T18_24"] || "-"}</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* 明日・明後日の天気 */}
+        {/* 明日・明後日の天気 - モバイル表示調整 */}
         <div className="mt-6">
-          <h3 className="text-xl font-semibold mb-4 dark:text-white">
+          <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 dark:text-white">
             明日・明後日の天気
           </h3>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             {weatherInfo.forecasts?.slice(1).map((forecast, index) => (
               <div
                 key={index}
-                className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow-md text-center text-gray-500 dark:text-gray-300"
+                className="bg-gray-100 dark:bg-gray-700 p-3 sm:p-4 rounded-lg shadow-md text-center text-gray-500 dark:text-gray-300"
               >
-                <p>{forecast.dateLabel}</p>
+                <p className="font-medium">{forecast.dateLabel}</p>
                 <WeatherIcon
                   imagePath={forecast.image.url}
-                  className="text-3xl mx-auto"
+                  className="w-10 h-10 mx-auto my-2"
                 />
                 <p className="text-sm dark:text-white">{forecast.telop}</p>
-                <div>
-                  <span className="text-red-500 font-medium mr-2">
+                <div className="mt-1">
+                  <span className="text-red-500 font-medium mr-2 text-sm">
                     {forecast.temperature.max?.celsius || "-"}°C
                   </span>
-                  <span className="text-blue-500 font-medium">
+                  <span className="text-blue-500 font-medium text-sm">
                     {forecast.temperature.min?.celsius || "-"}°C
                   </span>
                 </div>
@@ -211,7 +211,7 @@ const PrefectureDetail: React.FC<PrefectureDetailProps> = ({
           </div>
         </div>
 
-        <div className="mt-6 text-sm text-gray-500 dark:text-gray-400">
+        <div className="mt-6 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
           <p>発表元: {forecast.publishingOffice}</p>
           <p>発表日時: {formatDate(forecast.publicTime)}</p>
         </div>

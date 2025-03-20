@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { WeatherForecast } from "../types/weather";
 import { fetchWeatherByCity } from "../utils/api";
-import { MAJOR_CITIES } from "../data/prefectures";
+import { MAJOR_CITIES, prefectures } from "../data/prefectures";
 import WeatherCard from "./WeatherCard";
 
 const MainVisual: React.FC = () => {
@@ -76,25 +76,59 @@ const MainVisual: React.FC = () => {
     );
   }
 
+  // 都市コードから地域情報を取得する関数
+  const getRegionForCity = (cityCode: string) => {
+    const prefecture = prefectures.find((p) => p.code === cityCode);
+    return prefecture?.region || "";
+  };
+
+  // 色のマッピング（地方ごとに色を設定）
+  const regionColors: Record<string, string> = {
+    北海道: "border-blue-400 dark:border-blue-800",
+    東北: "border-green-400 dark:border-green-800",
+    関東: "border-red-400 dark:border-red-800",
+    中部: "border-yellow-400 dark:border-yellow-800",
+    関西: "border-purple-400 dark:border-purple-800",
+    中国: "border-pink-400 dark:border-pink-800",
+    四国: "border-indigo-400 dark:border-indigo-800",
+    九州: "border-orange-400 dark:border-orange-800",
+    沖縄: "border-teal-400 dark:border-teal-800",
+  };
+
   return (
     <section className="my-8">
       <h2 className="text-2xl font-bold mb-6 text-center dark:text-white">
         主要都市の天気予報
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {Object.entries(forecasts).map(([cityCode, forecast]) =>
-          forecast ? (
-            <WeatherCard key={cityCode} forecast={forecast} />
-          ) : (
-            <div
-              key={cityCode}
-              className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow-md text-center text-gray-500 dark:text-gray-300"
-            >
-              データを取得できませんでした
-            </div>
-          )
-        )}
+      {/* スマホ表示で途切れないように調整 */}
+      <div className="overflow-x-auto pb-2 p-4 rounded-lg shadow-md">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 min-w-full">
+          {Object.entries(forecasts).map(([cityCode, forecast]) =>
+            forecast ? (
+              <div
+                key={cityCode}
+                className={`border-l-4 pl-2 ${
+                  regionColors[getRegionForCity(cityCode)]
+                }`}
+              >
+                {/* WeatherCardのサイズと内部余白を調整 */}
+                <WeatherCard
+                  forecast={forecast}
+                  className="w-full min-w-[280px]"
+                />
+              </div>
+            ) : (
+              <div
+                key={cityCode}
+                className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow-md text-center text-gray-500 dark:text-gray-300 min-w-[280px]"
+              >
+                データを取得できませんでした
+              </div>
+            )
+          )}
+        </div>
       </div>
+      {/* 地方の色凡例 - モバイル対応のために調整 */}
     </section>
   );
 };
